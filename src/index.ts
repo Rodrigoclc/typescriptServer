@@ -1,15 +1,11 @@
 import type { IncomingMessage, ServerResponse } from "node:http";
 import { HttpServer } from "./http/HttpServer.js";
+import type { HttpResponse } from "./http/HttpResponse.js";
+import type { HttpRequest } from "./http/HttpRequest.js"
+import {} from "./http/Router.js"
+coonst router = new Route
+const server = new HttpServer(
+  router.handle.bind(router)
+)
 
-const app = new HttpServer(async (request: IncomingMessage, response: ServerResponse) => {
-  response.statusCode = 200;
-
-  response.setHeader("Content-type", "application/json");
-  response.end(
-    JSON.stringify({
-      message: "Hello World",
-    }),
-  );
-});
-
-app.listen(3000);
+server.listen(3000)

@@ -1,8 +1,10 @@
-import http, { type IncomingMessage, type ServerResponse } from "node:http";
+import http from "node:http";
+import { HttpRequest } from "./HttpRequest.js";
+import { HttpResponse } from "./HttpResponse.js";
 
-type RequestHandler = (
-  request: IncomingMessage,
-  response: ServerResponse,
+export type RequestHandler = (
+  request: HttpRequest,
+  response: HttpResponse,
 ) => void | Promise<void>;
 
 export class HttpServer {
@@ -11,7 +13,9 @@ export class HttpServer {
   constructor(handler: RequestHandler) {
     this.server = http.createServer(async (request, response) => {
       try {
-        await handler(request, response);
+        const httpRequest = new HttpRequest(request);
+        const httpResponse = new HttpResponse(response);
+        await handler(httpRequest, httpResponse);
       } catch (error) {
         console.log(error);
 
