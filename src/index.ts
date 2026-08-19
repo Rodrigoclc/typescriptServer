@@ -1,9 +1,15 @@
-import http from 'node:http';
+import type { IncomingMessage, ServerResponse } from "node:http";
+import { HttpServer } from "./http/HttpServer.js";
 
-const server = await http.createServer(async (req, res) => {
+const app = new HttpServer(async (request: IncomingMessage, response: ServerResponse) => {
+  response.statusCode = 200;
 
+  response.setHeader("Content-type", "application/json");
+  response.end(
+    JSON.stringify({
+      message: "Hello World",
+    }),
+  );
 });
 
-server.listen(3000, () => {
-	console.log(`Server running on http://localhost:3000`);
-})
+app.listen(3000);
