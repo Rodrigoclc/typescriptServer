@@ -1,11 +1,13 @@
-import type { IncomingMessage, ServerResponse } from "node:http";
 import { HttpServer } from "./http/HttpServer.js";
-import type { HttpResponse } from "./http/HttpResponse.js";
-import type { HttpRequest } from "./http/HttpRequest.js"
-import {} from "./http/Router.js"
-coonst router = new Route
-const server = new HttpServer(
-  router.handle.bind(router)
-)
+import { Router } from "./http/Router.js";
 
-server.listen(3000)
+const router = new Router();
+
+router.get("/health", async (_, response) => {
+  response.status(200).json({ status: "ok" });
+  return;
+});
+
+const server = new HttpServer(router.handle.bind(router));
+
+server.listen(3003);
